@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import com.reservas.api.apireservas.model.enums.Status;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,10 +30,10 @@ public class Booking {
     private LocalTime endTime;
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne
-    private ProfessionalService professionalService;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ProfessionalProvision professionalProvision;
 
 }

@@ -28,7 +28,7 @@ public class Professional {
     private Boolean active;
 
     @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
-    private List<ProfessionalService> services;
+    private List<ProfessionalProvision> provision;
 
     @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     private List<Availability> availabilities;
