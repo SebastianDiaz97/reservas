@@ -1,5 +1,6 @@
 package com.reservas.api.apireservas.mapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,17 @@ public class Mapper {
                 .price(p.getPrice())
                 .build();
     }    
+
+
+    public static Provision dtoTo(ProvisionDTO p){
+        if (p == null) return null;
+        
+        return Provision.builder()
+                .name(p.name())
+                .durationMinutes(p.durationMinutes())
+                .price(p.price())
+                .build();
+    }
 
     // mapper User a UserDTO
 
@@ -86,13 +98,17 @@ public class Mapper {
     public static ProfessionalDTO toDTO(Professional p){
         if (p==null) return null;
 
-        List<ProfessionalProvisionDTO> detailsProvision = p.getProvision().stream().map(det ->
+        List<ProfessionalProvisionDTO> detailsProvision = Collections.emptyList();
+        List<AvailabilityDTO> detailsAvailability = Collections.emptyList();
+
+        if (p.getProvision() != null) {
+                detailsProvision = p.getProvision().stream().map(det ->
                 toDto(det)).collect(Collectors.toList());
-
-        List<AvailabilityDTO> detailsAvailability = p.getAvailabilities().stream().map(det ->
-                toDTO(det)).collect(Collectors.toList());
-
-
+        }
+        if (p.getAvailabilities() != null) {
+                detailsAvailability = p.getAvailabilities().stream().map(det ->
+                        toDTO(det)).collect(Collectors.toList());
+        }
         return ProfessionalDTO.builder()
             .id(p.getId())
             .name(p.getName())
@@ -100,6 +116,15 @@ public class Mapper {
             .provision(detailsProvision)
             .availabilities(detailsAvailability)
             .build();
+    }
+
+    public static Professional dtoTo(ProfessionalDTO p){
+        if (p == null) return null;
+
+        return Professional.builder()
+                .name(p.name())
+                .speciality(p.speciality())
+                .build();
     }
     // mapper Availability a DTO
 
