@@ -25,11 +25,18 @@ public class Mapper {
 
         if (p == null) return null;
 
+        List<ProfessionalProvisionDTO> listDto = Collections.emptyList();
+
+        if (p.getProfessionals() != null) {
+                listDto = p.getProfessionals().stream().map(det->toDto(det)).collect(Collectors.toList());
+        }
+
         return ProvisionDTO.builder()
                 .id(p.getId())
                 .name(p.getName())
                 .durationMinutes(p.getDurationMinutes())
                 .price(p.getPrice())
+                .professionals(listDto)
                 .build();
     }    
 
@@ -80,16 +87,19 @@ public class Mapper {
 
     public static ProfessionalProvisionDTO toDto(ProfessionalProvision p){
         if (p == null) return null;
+        List<BookingDTO> details = Collections.emptyList();
 
-        List<BookingDTO> details = p.getBookings().stream().map(det ->
+        if (p.getBookings() != null) {
+                details = p.getBookings().stream().map(det ->
                 toDTO(det)).collect(Collectors.toList());
-
+        }
 
         return ProfessionalProvisionDTO.builder()
             .id(p.getId())
             .idProfessional(p.getProfessional().getId())
             .idProvision(p.getProvision().getId())
             .bookings(details)
+            .active(p.getActive())
             .build();
     }
 

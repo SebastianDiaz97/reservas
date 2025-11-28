@@ -12,6 +12,8 @@ public record ProfessionalProvisionDTO(
 
     Long idProvision,
 
+    Boolean active,
+
     List<BookingDTO> bookings
 ) {
 
