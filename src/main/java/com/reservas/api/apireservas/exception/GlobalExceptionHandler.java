@@ -28,5 +28,14 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex){
+        Map<String, String> response = new HashMap<>();
+        String[] valor = ex.getMessage().split("DayOfWeek.");
+
+        response.put("error", "Valor "+valor[1]+" no existe en dayOfWeek");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
     
 }

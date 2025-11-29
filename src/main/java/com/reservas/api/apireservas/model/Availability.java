@@ -1,5 +1,6 @@
 package com.reservas.api.apireservas.model;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
@@ -22,9 +23,10 @@ public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String dayOfWeek;
+    private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Professional professional;

@@ -143,10 +143,11 @@ public class Mapper {
 
         return AvailabilityDTO.builder()
             .id(a.getId())
-            .dayOfWeek(a.getDayOfWeek())
+            .dayOfWeek(a.getDayOfWeek().name())
             .startTime(a.getStartTime())
             .endTime(a.getEndTime())
             .idProfessional(a.getProfessional().getId())
+            .active(a.getActive())
             .build();
     }
 }

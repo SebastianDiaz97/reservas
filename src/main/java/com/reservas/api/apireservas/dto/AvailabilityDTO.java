@@ -10,6 +10,7 @@ public record AvailabilityDTO(
     String dayOfWeek,
     LocalTime startTime,
     LocalTime endTime,
+    Boolean active,
 
     Long idProfessional
 ) {

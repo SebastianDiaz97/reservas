@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reservas.api.apireservas.dto.ProfessionalProvisionDTO;
 import com.reservas.api.apireservas.service.IProfessionalProvisionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -29,7 +28,7 @@ public class ProfessionalProvisionController {
     @PostMapping("/{professionalId}/services/{provisionId}")
     public ResponseEntity<ProfessionalProvisionDTO> postRelation(@PathVariable Long professionalId, @PathVariable Long provisionId) {
         ProfessionalProvisionDTO pp = ppService.createRelation(professionalId, provisionId);
-        String url = "/professionals" + pp.idProfessional() + "/services" + pp.idProvision();
+        String url = "/professionals/" + pp.idProfessional() + "/services/" + pp.idProvision();
 
         return ResponseEntity.created(URI.create(url)).body(pp);
     }
