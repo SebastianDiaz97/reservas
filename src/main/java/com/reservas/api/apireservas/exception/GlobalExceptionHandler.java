@@ -36,6 +36,5 @@ public class GlobalExceptionHandler {
 
         response.put("error", "Valor "+valor[1]+" no existe en dayOfWeek");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-    
+    }    
 }

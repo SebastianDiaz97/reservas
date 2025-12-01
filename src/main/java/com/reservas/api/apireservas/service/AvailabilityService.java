@@ -72,6 +72,8 @@ public class AvailabilityService implements IAvailabilityService{
             availability.setEndTime(availabilityDTO.endTime());
         }
 
+        
+
         availability = repository.save(availability);
         return Mapper.toDTO(availability);
 
