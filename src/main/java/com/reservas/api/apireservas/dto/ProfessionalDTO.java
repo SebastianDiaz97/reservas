@@ -12,6 +12,8 @@ public record ProfessionalDTO(
 
     List<ProfessionalProvisionDTO> provision,
 
-    List<AvailabilityDTO> availabilities) {
+    List<AvailabilityDTO> availabilities,
+    List<BookingDTO> bookings
+) {
          
 }

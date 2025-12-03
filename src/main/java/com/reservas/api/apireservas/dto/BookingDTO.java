@@ -15,8 +15,10 @@ public record BookingDTO(
     LocalTime endTime,
     Status status,
 
-    Long idUser,
-
-    Long idProfessionalProvision) {
+    Long userId,
+    
+    Long professionalId,
+    Long serviceId
+) {
     
 }

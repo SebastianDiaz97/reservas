@@ -1,7 +1,5 @@
 package com.reservas.api.apireservas.dto;
 
-import java.util.List;
-
 import lombok.Builder;
 
 @Builder
@@ -12,9 +10,8 @@ public record ProfessionalProvisionDTO(
 
     Long idProvision,
 
-    Boolean active,
+    Boolean active
 
-    List<BookingDTO> bookings
 ) {
 
 }

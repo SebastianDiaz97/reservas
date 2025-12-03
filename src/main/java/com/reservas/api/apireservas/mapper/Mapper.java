@@ -26,9 +26,13 @@ public class Mapper {
         if (p == null) return null;
 
         List<ProfessionalProvisionDTO> listDto = Collections.emptyList();
+        List<BookingDTO> bookings = Collections.emptyList();
 
         if (p.getProfessionals() != null) {
                 listDto = p.getProfessionals().stream().map(det->toDto(det)).collect(Collectors.toList());
+        }
+        if (p.getBookings() != null) {
+                bookings = p.getBookings().stream().map(det->toDTO(det)).collect(Collectors.toList());
         }
 
         return ProvisionDTO.builder()
@@ -37,6 +41,7 @@ public class Mapper {
                 .durationMinutes(p.getDurationMinutes())
                 .price(p.getPrice())
                 .professionals(listDto)
+                .bookings(bookings)
                 .build();
     }    
 
@@ -77,8 +82,10 @@ public class Mapper {
             .date(b.getDate())
             .startTime(b.getStartTime())
             .endTime(b.getEndTime())
-            .idUser(b.getUser().getId())
-            .idProfessionalProvision(b.getProfessionalProvision().getId())
+            .status(b.getStatus())
+            .userId(b.getUser().getId())
+            .professionalId(b.getProfessional().getId())
+            .serviceId(b.getProvision().getId())
             .build();
     }
 
@@ -87,18 +94,11 @@ public class Mapper {
 
     public static ProfessionalProvisionDTO toDto(ProfessionalProvision p){
         if (p == null) return null;
-        List<BookingDTO> details = Collections.emptyList();
-
-        if (p.getBookings() != null) {
-                details = p.getBookings().stream().map(det ->
-                toDTO(det)).collect(Collectors.toList());
-        }
 
         return ProfessionalProvisionDTO.builder()
             .id(p.getId())
             .idProfessional(p.getProfessional().getId())
             .idProvision(p.getProvision().getId())
-            .bookings(details)
             .active(p.getActive())
             .build();
     }
@@ -110,6 +110,7 @@ public class Mapper {
 
         List<ProfessionalProvisionDTO> detailsProvision = Collections.emptyList();
         List<AvailabilityDTO> detailsAvailability = Collections.emptyList();
+        List<BookingDTO> detailsBooking = Collections.emptyList();
 
         if (p.getProvision() != null) {
                 detailsProvision = p.getProvision().stream().map(det ->
@@ -119,12 +120,18 @@ public class Mapper {
                 detailsAvailability = p.getAvailabilities().stream().map(det ->
                         toDTO(det)).collect(Collectors.toList());
         }
+        if (p.getBookings() != null) {
+                detailsBooking = p.getBookings().stream().map(det ->
+                        toDTO(det)).collect(Collectors.toList());
+        }
+
         return ProfessionalDTO.builder()
             .id(p.getId())
             .name(p.getName())
             .speciality(p.getSpeciality())
             .provision(detailsProvision)
             .availabilities(detailsAvailability)
+            .bookings(detailsBooking)
             .build();
     }
 

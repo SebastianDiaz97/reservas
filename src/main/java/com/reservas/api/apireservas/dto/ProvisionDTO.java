@@ -11,7 +11,8 @@ public record ProvisionDTO(
     int durationMinutes,
     int price,
 
-    List<ProfessionalProvisionDTO> professionals
+    List<ProfessionalProvisionDTO> professionals,
+    List<BookingDTO> bookings
 ) {
 
 }

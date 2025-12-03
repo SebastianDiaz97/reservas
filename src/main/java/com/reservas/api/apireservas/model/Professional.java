@@ -36,4 +36,7 @@ public class Professional {
 
     @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
     private List<Availability> availabilities;
+
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
+    private List<Booking> bookings;
 }

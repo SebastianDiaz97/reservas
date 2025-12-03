@@ -34,6 +34,9 @@ public class Booking {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ProfessionalProvision professionalProvision;
+    private Professional professional;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Provision provision;
 
 }
