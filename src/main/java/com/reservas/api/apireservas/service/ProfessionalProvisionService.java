@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.reservas.api.apireservas.dto.ProfessionalProvisionDTO;
 import com.reservas.api.apireservas.exception.NotFoundException;
+import com.reservas.api.apireservas.exception.ValidationException;
 import com.reservas.api.apireservas.mapper.Mapper;
 import com.reservas.api.apireservas.model.Professional;
 import com.reservas.api.apireservas.model.ProfessionalProvision;
@@ -37,7 +38,7 @@ public class ProfessionalProvisionService implements IProfessionalProvisionServi
         if(provisOptional.isEmpty()) throw new NotFoundException("Servicio no encontrado");
 
         boolean exists = ppRepo.existsByProfessionalIdAndProvisionId(professionalId, provisionId);
-        if(exists) throw new NotFoundException("Registro duplicado");
+        if(exists) throw new ValidationException("Registro duplicado");
 
         Professional professional = professOptional.get();
         Provision provision = provisOptional.get();

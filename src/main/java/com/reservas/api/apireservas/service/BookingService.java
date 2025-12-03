@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.reservas.api.apireservas.dto.AvailabilitySlotsDTO;
 import com.reservas.api.apireservas.dto.BookingDTO;
+import com.reservas.api.apireservas.exception.ConflictException;
 import com.reservas.api.apireservas.exception.NotFoundException;
+import com.reservas.api.apireservas.exception.ValidationException;
 import com.reservas.api.apireservas.mapper.Mapper;
 import com.reservas.api.apireservas.model.Availability;
 import com.reservas.api.apireservas.model.Booking;
@@ -45,6 +47,10 @@ public class BookingService implements IBookingService{
 
     @Override
     public AvailabilitySlotsDTO searchShedules(Long serviceId, Long professionalId, LocalDate date) {
+        if (professionalId == null) throw new ValidationException("professionalId es requerido");
+        if (serviceId == null) throw new ValidationException("serviceId es requerido");
+        if (date == null) throw new ValidationException("date es requerido");
+        
         
         Boolean exists = ppRepository.existsByProfessionalIdAndProvisionId(professionalId, serviceId);
         if(!exists) throw new NotFoundException("Registro no encontrado");
@@ -83,6 +89,11 @@ public class BookingService implements IBookingService{
 
     @Override
     public BookingDTO createBooking(Long serviceId, Long professionalId, LocalDate date, LocalTime startTime, Long userId) {
+        if(serviceId == null) throw new ValidationException("serviceId es requerido");
+        if(professionalId == null) throw new ValidationException("professionalId es requerido");
+        if(date == null) throw new ValidationException("date es requerido");
+        if(startTime == null) throw new ValidationException("startTime es requerido");
+        if(userId == null) throw new ValidationException("userId es requerido");
         
         Boolean exists = ppRepository.existsByProfessionalIdAndProvisionId(professionalId, serviceId);
         if(!exists) throw new NotFoundException("Registro no encontrado");
@@ -100,7 +111,7 @@ public class BookingService implements IBookingService{
         if(availability == null) throw new NotFoundException("Profesional no trabaja ese dia");
 
         List<Booking> free = bookingRepository.findOverlaps(professionalId, date, startTime, startTime.plusMinutes(durationProvision));
-        if (!free.isEmpty()) throw new NotFoundException("Espacio horario no disponible");
+        if (!free.isEmpty()) throw new ConflictException("Espacio horario no disponible");
     
         booking.setDate(date);
         booking.setProfessional(professional);

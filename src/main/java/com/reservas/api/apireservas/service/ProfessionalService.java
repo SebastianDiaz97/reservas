@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.reservas.api.apireservas.dto.ProfessionalDTO;
 import com.reservas.api.apireservas.exception.NotFoundException;
+import com.reservas.api.apireservas.exception.ValidationException;
 import com.reservas.api.apireservas.mapper.Mapper;
 import com.reservas.api.apireservas.model.Professional;
 import com.reservas.api.apireservas.repository.ProfessionalRepository;
@@ -21,6 +22,9 @@ public class ProfessionalService implements IProfessionaService{
 
     @Override
     public ProfessionalDTO createProfessional(ProfessionalDTO professionalDto) {
+        if (professionalDto.name() == null || professionalDto.speciality() == null) {
+            throw new ValidationException("Ni nombre ni especialidad pueden venir vacios");
+        }
         Professional professional = Mapper.dtoTo(professionalDto);
         professional.setActive(true);
         professional = repository.save(professional);

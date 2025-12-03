@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.reservas.api.apireservas.dto.AvailabilityDTO;
 import com.reservas.api.apireservas.exception.NotFoundException;
+import com.reservas.api.apireservas.exception.ValidationException;
 import com.reservas.api.apireservas.mapper.Mapper;
 import com.reservas.api.apireservas.model.Availability;
 import com.reservas.api.apireservas.model.Professional;
@@ -31,6 +32,10 @@ public class AvailabilityService implements IAvailabilityService{
         Optional<Professional> profeOptional = professionalRepository.findByIdAndActive(professionalId, true);
         if(profeOptional.isEmpty()) throw new NotFoundException("Profesional no encontrado");
         Professional professional = profeOptional.get();
+
+        if (availabilityDTO.endTime().isBefore(availabilityDTO.startTime())) {
+            throw new ValidationException("endTime debe estar despues de startTime");
+        }
 
         Availability availability = new Availability();
         availability.setActive(true);

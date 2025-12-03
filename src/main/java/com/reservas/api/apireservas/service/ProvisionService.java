@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.reservas.api.apireservas.dto.ProvisionDTO;
 import com.reservas.api.apireservas.exception.NotFoundException;
+import com.reservas.api.apireservas.exception.ValidationException;
 import com.reservas.api.apireservas.mapper.Mapper;
 import com.reservas.api.apireservas.model.Provision;
 import com.reservas.api.apireservas.repository.ProvisionRepository;
@@ -22,6 +23,9 @@ public class ProvisionService implements IProvisionService{
 
     @Override
     public ProvisionDTO createProvision(ProvisionDTO provisionDto) {
+        if (provisionDto.durationMinutes()<1) {
+            throw new ValidationException("Duracion debe ser mayor a 0");
+        }
         Provision provision = Mapper.dtoTo(provisionDto);
         provision.setActive(true);
         provision = pRepository.save(provision);

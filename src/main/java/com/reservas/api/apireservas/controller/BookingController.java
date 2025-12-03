@@ -27,11 +27,11 @@ public class BookingController {
 
     @Autowired
     private IBookingService service;
-    @GetMapping
+    @GetMapping("/available")
     public ResponseEntity<AvailabilitySlotsDTO> getShedule(
-        @RequestParam(required = true) Long serviceId,
-        @RequestParam(required = true) Long professionalId,
-        @RequestParam(required = true) String date
+        @RequestParam Long serviceId,
+        @RequestParam Long professionalId,
+        @RequestParam String date
     ) {
         LocalDate transformedDate = LocalDate.parse(date);
         
